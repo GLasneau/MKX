@@ -5196,7 +5196,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
     <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    /* 1. CONTROLE DO MENU MOBILE (3 PONTINHOS) */
+    
     const toggleBtn = document.querySelector('button[aria-label="Menu"]') || document.getElementById('btn-toggle-menu');
     const closeBtn = document.getElementById('btn-close-menu');
     const sheet = document.getElementById('mobile-sheet');
@@ -5231,7 +5231,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
     });
 
 
-    /* 2. CONTROLE DO FAQ / ACCORDION */
+    
     const triggers = document.querySelectorAll('button[aria-controls]');
 
     triggers.forEach(trigger => {
@@ -5243,7 +5243,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         const contentDiv = document.getElementById(controlsId);
         const parentItem = trigger.closest('div[data-state]') || trigger.parentElement.parentElement;
 
-        // Fecha os outros itens
+        
         triggers.forEach(otherTrigger => {
           if (otherTrigger !== trigger) {
             otherTrigger.setAttribute('aria-expanded', 'false');
@@ -5262,7 +5262,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
           }
         });
 
-        // Alterna o estado do item clicado
+        
         if (isExpanded) {
           trigger.setAttribute('aria-expanded', 'false');
           trigger.setAttribute('data-state', 'closed');
