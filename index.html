@@ -4034,11 +4034,10 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                             <div class="hidden md:block" x-file-name="Header" x-line-number="66" x-column="10" x-component="div" x-id="Header_66_10" x-dynamic="false"><a href="https://wa.me/5521986932437?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noreferrer" x-file-name="Header" x-line-number="68" x-column="14" x-component="a" x-id="Header_68_14" x-dynamic="false" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 shadow h-9 px-4 py-2 bg-[#25D366] hover:bg-[#1eb556] text-white font-semibold btn-shine" x-excluded="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4 mr-2" aria-hidden="true" x-file-name="Header" x-line-number="69" x-column="16" x-component="Phone" x-id="Header_69_16" x-dynamic="false">
                                         <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
                                         </path>
-                                    </svg> Orçamento WhatsApp</a></div><button id="btn-toggle-menu" class="lg:hidden flex items-center gap-1.5 p-2 rounded-md bg-slate-100 text-[#0b1e56] font-semibold text-xs" aria-label="Menu">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><path d="M4 12h16"></path><path d="M4 18h16"></path><path d="M4 6h16"></path></svg>
+                                    </svg> Orçamento WhatsApp</a></div><button type="button" onclick="document.getElementById('mobile-sheet').classList.add('open'); document.getElementById('mobile-overlay').classList.add('open'); document.body.style.overflow='hidden';" class="lg:hidden flex items-center gap-1.5 p-2 rounded-md bg-slate-100 text-[#0b1e56] font-semibold text-xs focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"></path><path d="M4 18h16"></path><path d="M4 6h16"></path></svg>
                                         <span>Menu</span>
-
-                                </button>
+                                            </button>
                         </div>
                     </div>
                 </header>
@@ -5306,5 +5305,30 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
   });
 </script>
 
+<div id="mobile-overlay" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998;"></div>
 
+<div id="mobile-sheet" style="position: fixed; top: 0; right: -300px; width: 300px; height: 100%; background: white; z-index: 9999; box-shadow: -4px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; padding: 1.5rem; box-sizing: border-box;">
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+      <span style="font-weight: 800; font-size: 1.25rem; color: #0b1e56;">Menu MKX</span>
+      <button type="button" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #64748b;">&times;</button>
+    </div>
+    <nav style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
+      <a href="#inicio" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Início</a>
+      <a href="#sobre" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Sobre</a>
+      <a href="#produtos" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Produtos</a>
+      <a href="#marcas" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Marcas</a>
+      <a href="#entregas" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Entregas</a>
+      <a href="#contato" onclick="document.getElementById('mobile-sheet').classList.remove('open'); document.getElementById('mobile-overlay').classList.remove('open'); document.body.style.overflow='';" style="text-decoration: none; color: #1e293b; font-weight: 600; padding: 0.5rem 0;">Contato</a>
+    </nav>
+  </div>
+  <div style="border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+    <a href="https://wa.me/5521986932437" target="_blank" style="display: block; text-align: center; background: #25D366; color: white; font-weight: bold; padding: 0.75rem; border-radius: 0.375rem; text-decoration: none;">Orçamento WhatsApp</a>
+  </div>
+</div>
+
+<style>
+  #mobile-sheet.open { right: 0 !important; }
+  #mobile-overlay.open { display: block !important; }
+</style>
 </body></html>
