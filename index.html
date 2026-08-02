@@ -5195,104 +5195,116 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
     <iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; visibility: hidden;"></iframe>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    
+    /* 1. CONTROLE DO MENU MOBILE (3 PONTINHOS) */
+    const toggleBtn = document.querySelector('button[aria-label="Menu"]') || document.getElementById('btn-toggle-menu');
+    const closeBtn = document.getElementById('btn-close-menu');
+    const sheet = document.getElementById('mobile-sheet');
+    const overlay = document.getElementById('mobile-overlay');
+    const links = document.querySelectorAll('.mobile-link');
 
+    function openMobileMenu(e) {
+      if (e) e.preventDefault();
+      if (sheet) sheet.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu(e) {
+      if (e) e.preventDefault();
+      if (sheet) sheet.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', openMobileMenu);
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeMobileMenu);
+    if (overlay) overlay.addEventListener('click', closeMobileMenu);
+
+    links.forEach(l => {
+      l.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+
+    /* 2. CONTROLE DO FAQ / ACCORDION */
+    const triggers = document.querySelectorAll('button[aria-controls]');
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+        const controlsId = trigger.getAttribute('aria-controls');
+        const contentDiv = document.getElementById(controlsId);
+        const parentItem = trigger.closest('div[data-state]') || trigger.parentElement.parentElement;
+
+        // Fecha os outros itens
+        triggers.forEach(otherTrigger => {
+          if (otherTrigger !== trigger) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+            otherTrigger.setAttribute('data-state', 'closed');
             
-            const triggers = document.querySelectorAll('button[aria-controls]');
+            const otherParent = otherTrigger.closest('div[data-state]') || otherTrigger.parentElement.parentElement;
+            if (otherParent) otherParent.setAttribute('data-state', 'closed');
 
-            triggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-                    const controlsId = trigger.getAttribute('aria-controls');
-                    const contentDiv = document.getElementById(controlsId);
-                    const parentItem = trigger.closest('div[data-state]') || trigger.parentElement.parentElement;
-
-                    
-                    triggers.forEach(otherTrigger => {
-                        if (otherTrigger !== trigger) {
-                            otherTrigger.setAttribute('aria-expanded', 'false');
-                            otherTrigger.setAttribute('data-state', 'closed');
-                            otherTrigger.classList.remove('rotate-180');
-
-                            const otherParent = otherTrigger.closest('div[data-state]') || otherTrigger.parentElement.parentElement;
-                            if (otherParent) otherParent.setAttribute('data-state', 'closed');
-
-                            const otherId = otherTrigger.getAttribute('aria-controls');
-                            const otherContent = document.getElementById(otherId);
-                            if (otherContent) {
-                                otherContent.setAttribute('hidden', '');
-                                otherContent.setAttribute('data-state', 'closed');
-                                otherContent.style.display = 'none';
-                            }
-                        }
-                    });
-
-                    // Alterna o estado do item clicado (Abre ou Fecha)
-                    if (isExpanded) {
-                        trigger.setAttribute('aria-expanded', 'false');
-                        trigger.setAttribute('data-state', 'closed');
-                        if (parentItem) parentItem.setAttribute('data-state', 'closed');
-                        if (contentDiv) {
-                            contentDiv.setAttribute('hidden', '');
-                            contentDiv.setAttribute('data-state', 'closed');
-                            contentDiv.style.display = 'none';
-                        }
-                    } else {
-                        trigger.setAttribute('aria-expanded', 'true');
-                        trigger.setAttribute('data-state', 'open');
-                        if (parentItem) parentItem.setAttribute('data-state', 'open');
-                        if (contentDiv) {
-                            contentDiv.removeAttribute('hidden');
-                            contentDiv.setAttribute('data-state', 'open');
-                            contentDiv.style.display = 'block';
-
-                            // Pega o texto da resposta que estava vazio no HTML e preenche dinamicamente baseado na pergunta
-                            const questionText = trigger.textContent.trim();
-                            if (contentDiv.innerHTML.trim() === '') {
-                                if (questionText.includes('pagamento')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Aceitamos PIX, transferência bancária, boleto (para clientes cadastrados), cartão de crédito em até 6x sem juros e dinheiro na loja física.</div>';
-                                } else if (questionText.includes('fora do Rio')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim! Entregamos em todo o Brasil através de transportadoras parceiras e Correios. Para o Rio de Janeiro, temos entrega expressa no mesmo dia via motoboy próprio.</div>';
-                                } else if (questionText.includes('orçamento')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Você pode solicitar orçamento direto pelo nosso WhatsApp comercial, ligar para nossos telefones ou preencher o formulário no site. Nossa equipe responde em minutos.</div>';
-                                } else if (questionText.includes('pessoa física')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim! Atendemos tanto CNPJ quanto CPF com a mesma dedicação e sem valor mínimo de pedido.</div>';
-                                } else if (questionText.includes('código da peça')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sem problemas! Você pode nos enviar foto da peça antiga ou as medidas pelo WhatsApp que nossos vendedores identificam a peça exata.</div>';
-                                } else if (questionText.includes('equivalentes')) {
-                                    contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim. Apresentamos opções de marcas equivalentes de primeira linha quando houver necessidade de prazos urgentes ou melhor custo-benefício.</div>';
-                                }
-                            }
-                        }
-                    }
-                });
-            });
-
-            
-            const toggleBtn = document.querySelector('button[aria-label="Menu"]') || document.getElementById('btn-toggle-menu');
-            const closeBtn = document.getElementById('btn-close-menu');
-            const sheet = document.getElementById('mobile-sheet');
-            const overlay = document.getElementById('mobile-overlay');
-            const links = document.querySelectorAll('.mobile-link');
-
-            function openMobileMenu() {
-                if (sheet) sheet.classList.add('open');
-                if (overlay) overlay.classList.add('open');
-                document.body.style.overflow = 'hidden';
+            const otherId = otherTrigger.getAttribute('aria-controls');
+            const otherContent = document.getElementById(otherId);
+            if (otherContent) {
+              otherContent.setAttribute('hidden', '');
+              otherContent.setAttribute('data-state', 'closed');
+              otherContent.style.display = 'none';
             }
-
-            function closeMobileMenu() {
-                if (sheet) sheet.classList.remove('open');
-                if (overlay) overlay.classList.remove('open');
-                document.body.style.overflow = '';
-            }
-
-            if (toggleBtn) toggleBtn.addEventListener('click', openMobileMenu);
-            if (closeBtn) closeBtn.addEventListener('click', closeMobileMenu);
-            if (overlay) overlay.addEventListener('click', closeMobileMenu);
-
-            links.forEach(l => l.addEventListener('click', closeMobileMenu));
+          }
         });
-    </script></body></html>
+
+        // Alterna o estado do item clicado
+        if (isExpanded) {
+          trigger.setAttribute('aria-expanded', 'false');
+          trigger.setAttribute('data-state', 'closed');
+          if (parentItem) parentItem.setAttribute('data-state', 'closed');
+          if (contentDiv) {
+            contentDiv.setAttribute('hidden', '');
+            contentDiv.setAttribute('data-state', 'closed');
+            contentDiv.style.display = 'none';
+          }
+        } else {
+          trigger.setAttribute('aria-expanded', 'true');
+          trigger.setAttribute('data-state', 'open');
+          if (parentItem) parentItem.setAttribute('data-state', 'open');
+          if (contentDiv) {
+            contentDiv.removeAttribute('hidden');
+            contentDiv.setAttribute('data-state', 'open');
+            contentDiv.style.display = 'block';
+            
+            const questionText = trigger.textContent.trim();
+            if (contentDiv.innerHTML.trim() === '') {
+              if (questionText.includes('pagamento')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Aceitamos PIX, transferência bancária, boleto (para clientes cadastrados), cartão de crédito em até 6x sem juros e dinheiro na loja física.</div>';
+              } else if (questionText.includes('fora do Rio')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim! Entregamos em todo o Brasil através de transportadoras parceiras e Correios. Para o Rio de Janeiro, temos entrega expressa no mesmo dia via motoboy próprio.</div>';
+              } else if (questionText.includes('orçamento')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Você pode solicitar orçamento direto pelo nosso WhatsApp comercial, ligar para nossos telefones ou preencher o formulário no site. Nossa equipe responde em minutos.</div>';
+              } else if (questionText.includes('pessoa física')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim! Atendemos tanto CNPJ quanto CPF com a mesma dedicação e sem valor mínimo de pedido.</div>';
+              } else if (questionText.includes('código da peça')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sem problemas! Você pode nos enviar foto da peça antiga ou as medidas pelo WhatsApp que nossos vendedores identificam a peça exata.</div>';
+              } else if (questionText.includes('equivalentes')) {
+                contentDiv.innerHTML = '<div class="pt-0 text-slate-600 pb-5 leading-relaxed">Sim. Apresentamos opções de marcas equivalentes de primeira linha quando houver necessidade de prazos urgentes ou melhor custo-benefício.</div>';
+              }
+            }
+          }
+        }
+      });
+    });
+
+  });
+</script>
+
+
+</body></html>
